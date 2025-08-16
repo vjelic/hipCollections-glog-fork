@@ -12,7 +12,18 @@
           "informationUri": "https://www.glog.ai",
           "rules": [
             {
-              "id": "glog-2cbe7c2a-6445-4c21-ae66-ee67fc0b94fe",
+              "id": "glog-55a4e95a-e21f-47ee-b86e-0ffe1c8dea38",
+              "help": {
+                "text": ""
+              },
+              "properties": {
+                "tags": [
+                  "DS121708"
+                ]
+              }
+            },
+            {
+              "id": "glog-3c871a7d-76ee-4911-9e2b-d76a51378b0c",
               "help": {
                 "text": ""
               },
@@ -34,70 +45,7 @@
       "language": "en-US",
       "results": [
         {
-          "ruleId": "glog-14759347-9824-4da6-887d-74b53dbabfc5",
-          "kind": "fail",
-          "level": "note",
-          "message": {},
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "include/cuco/detail/static_multimap/device_view_impl.inl"
-                },
-                "region": {
-                  "startLine": 166,
-                  "startColumn": 6,
-                  "endLine": 166,
-                  "endColumn": 50,
-                  "charOffset": 6063,
-                  "charLength": 44,
-                  "snippet": {
-                    "text": "memcpy(&arr[0], &tmp, 2 * sizeof(value_type)",
-                    "rendered": {
-                      "text": "memcpy(&arr[0], &tmp, 2 * sizeof(value_type)",
-                      "markdown": "`memcpy(&arr[0], &tmp, 2 * sizeof(value_type)`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "There are a number of conditions in which memcpy can introduce a vulnerability (mismatched buffer sizes, null pointers, etc.). More secure alternitives perform additional validation of the source and destination buffer"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "include/cuco/detail/static_multimap/device_view_impl.inl"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "charOffset": 6063,
-                        "charLength": 44
-                      },
-                      "insertedContent": {
-                        "text": "memcpy_s(&arr[0], <size of &arr[0]>,  &tmp,  2 * sizeof(value_type)"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "BestPractice",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.ProblematicFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "glog-a3c54d4a-0246-4916-a2d4-a128db1417f6",
+          "ruleId": "glog-7dd7c61d-89c7-483f-834b-18a5065031ea",
           "kind": "fail",
           "level": "note",
           "message": {},
@@ -160,7 +108,70 @@
           }
         },
         {
-          "ruleId": "glog-2cbe7c2a-6445-4c21-ae66-ee67fc0b94fe",
+          "ruleId": "glog-55a4e95a-e21f-47ee-b86e-0ffe1c8dea38",
+          "kind": "fail",
+          "level": "note",
+          "message": {},
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "include/cuco/detail/static_multimap/device_view_impl.inl"
+                },
+                "region": {
+                  "startLine": 166,
+                  "startColumn": 6,
+                  "endLine": 166,
+                  "endColumn": 50,
+                  "charOffset": 6063,
+                  "charLength": 44,
+                  "snippet": {
+                    "text": "memcpy(&arr[0], &tmp, 2 * sizeof(value_type)",
+                    "rendered": {
+                      "text": "memcpy(&arr[0], &tmp, 2 * sizeof(value_type)",
+                      "markdown": "`memcpy(&arr[0], &tmp, 2 * sizeof(value_type)`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "There are a number of conditions in which memcpy can introduce a vulnerability (mismatched buffer sizes, null pointers, etc.). More secure alternitives perform additional validation of the source and destination buffer"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "include/cuco/detail/static_multimap/device_view_impl.inl"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 6063,
+                        "charLength": 44
+                      },
+                      "insertedContent": {
+                        "text": "memcpy_s(&arr[0], <size of &arr[0]>,  &tmp,  2 * sizeof(value_type)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-3c871a7d-76ee-4911-9e2b-d76a51378b0c",
           "kind": "fail",
           "level": "error",
           "message": {},
