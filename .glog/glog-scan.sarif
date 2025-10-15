@@ -24,7 +24,7 @@
               }
             },
             {
-              "id": "c56cf884-ac35-3853-9e08-7f869481dc6b",
+              "id": "0debeb4f-633d-3e52-aa45-33779e464186",
               "help": {
                 "text": "",
                 "markdown": "## Description\n\nThe `memcpy` function in C++ is used to copy a block of memory from one location to another. This function is vulnerable to buffer overflow attacks if the size of the data being copied is larger than the size of the destination buffer. In the provided code snippet, the `memcpy` function is copying data from `tmp` to `arr[0]` with a size of `2 * sizeof(value_type)`. If the size of `arr[0]` is less than `2 * sizeof(value_type)`, a buffer overflow will occur, potentially leading to arbitrary code execution, application crashes, or other security vulnerabilities.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always ensure that the destination buffer is large enough to hold the data being copied. This can be done by checking the size of the destination buffer before calling `memcpy`. Additionally, consider using safer alternatives to `memcpy`, such as `strncpy` or `memcpy_s`, which include a length parameter to prevent buffer overflows.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```cpp\nsize_t size = 2 * sizeof(value_type);\nif (sizeof(arr) >= size) {\n    memcpy(&arr[0], &tmp, size);\n} else {\n    // Handle error\n}\n```\n\nIn this fixed code, we first calculate the size of the data being copied and then check if the destination buffer (`arr`) is large enough to hold this data. If it is, we proceed with the `memcpy`. If it is not, we handle the error in a way that is appropriate for the specific application.\n\n## Library Dependencies\n\nThe `memcpy` function is part of the C Standard Library, so no additional library dependencies are required for the provided code snippet.\n\n## OWASP and CWE Links\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-120: Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')](https://cwe.mitre.org/data/definitions/120.html)\n\nPlease note that these links are subject to change and may not always be accessible."
@@ -36,7 +36,7 @@
               }
             },
             {
-              "id": "0debeb4f-633d-3e52-aa45-33779e464186",
+              "id": "c56cf884-ac35-3853-9e08-7f869481dc6b",
               "help": {
                 "text": "",
                 "markdown": "## Description\n\nThe `memcpy` function in C++ is used to copy a block of memory from one location to another. This function is vulnerable to buffer overflow attacks if the size of the data being copied is larger than the size of the destination buffer. In the provided code snippet, the `memcpy` function is copying data from `tmp` to `arr[0]` with a size of `2 * sizeof(value_type)`. If the size of `arr[0]` is less than `2 * sizeof(value_type)`, a buffer overflow will occur, potentially leading to arbitrary code execution, application crashes, or other security vulnerabilities.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always ensure that the destination buffer is large enough to hold the data being copied. This can be done by checking the size of the destination buffer before calling `memcpy`. Additionally, consider using safer alternatives to `memcpy`, such as `strncpy` or `memcpy_s`, which include a length parameter to prevent buffer overflows.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```cpp\nsize_t size = 2 * sizeof(value_type);\nif (sizeof(arr) >= size) {\n    memcpy(&arr[0], &tmp, size);\n} else {\n    // Handle error\n}\n```\n\nIn this fixed code, we first calculate the size of the data being copied and then check if the destination buffer (`arr`) is large enough to hold this data. If it is, we proceed with the `memcpy`. If it is not, we handle the error in a way that is appropriate for the specific application.\n\n## Library Dependencies\n\nThe `memcpy` function is part of the C Standard Library, so no additional library dependencies are required for the provided code snippet.\n\n## OWASP and CWE Links\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-120: Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')](https://cwe.mitre.org/data/definitions/120.html)\n\nPlease note that these links are subject to change and may not always be accessible."
@@ -99,71 +99,6 @@
           }
         },
         {
-          "ruleId": "c56cf884-ac35-3853-9e08-7f869481dc6b",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Detected Vulnerability in C Function (memcpy)"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "include/cuco/detail/static_multimap/device_view_impl.inl"
-                },
-                "region": {
-                  "startLine": 169,
-                  "startColumn": 6,
-                  "endLine": 169,
-                  "endColumn": 50,
-                  "charOffset": 6199,
-                  "charLength": 44,
-                  "snippet": {
-                    "text": "memcpy(&arr[0], &tmp, 2 * sizeof(value_type)",
-                    "rendered": {
-                      "text": "memcpy(&arr[0], &tmp, 2 * sizeof(value_type)",
-                      "markdown": "`memcpy(&arr[0], &tmp, 2 * sizeof(value_type)`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "There are a number of conditions in which memcpy can introduce a vulnerability (mismatched buffer sizes, null pointers, etc.). More secure alternitives perform additional validation of the source and destination buffer"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "include/cuco/detail/static_multimap/device_view_impl.inl"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "charOffset": 6199,
-                        "charLength": 44
-                      },
-                      "insertedContent": {
-                        "text": "memcpy_s(&arr[0], <size of &arr[0]>,  &tmp,  2 * sizeof(value_type)"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "BestPractice",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.ProblematicFunction"
-            ]
-          }
-        },
-        {
           "ruleId": "0debeb4f-633d-3e52-aa45-33779e464186",
           "kind": "fail",
           "level": "note",
@@ -209,6 +144,71 @@
                     {
                       "deletedRegion": {
                         "charOffset": 6063,
+                        "charLength": 44
+                      },
+                      "insertedContent": {
+                        "text": "memcpy_s(&arr[0], <size of &arr[0]>,  &tmp,  2 * sizeof(value_type)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "c56cf884-ac35-3853-9e08-7f869481dc6b",
+          "kind": "fail",
+          "level": "note",
+          "message": {
+            "text": "Detected Vulnerability in C Function (memcpy)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "include/cuco/detail/static_multimap/device_view_impl.inl"
+                },
+                "region": {
+                  "startLine": 169,
+                  "startColumn": 6,
+                  "endLine": 169,
+                  "endColumn": 50,
+                  "charOffset": 6199,
+                  "charLength": 44,
+                  "snippet": {
+                    "text": "memcpy(&arr[0], &tmp, 2 * sizeof(value_type)",
+                    "rendered": {
+                      "text": "memcpy(&arr[0], &tmp, 2 * sizeof(value_type)",
+                      "markdown": "`memcpy(&arr[0], &tmp, 2 * sizeof(value_type)`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "There are a number of conditions in which memcpy can introduce a vulnerability (mismatched buffer sizes, null pointers, etc.). More secure alternitives perform additional validation of the source and destination buffer"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "include/cuco/detail/static_multimap/device_view_impl.inl"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 6199,
                         "charLength": 44
                       },
                       "insertedContent": {
